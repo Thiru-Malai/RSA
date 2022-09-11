@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    margin: 0px;
+    height: auto;
+}
+
+body {
+    margin: 0px;
+    height: 100vh;
+    min-height: auto;
+    background-color: rgb(77, 173, 185);
+}
+
+.user {
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+    font-family: 'Raleway';
+}
+
+.left {
+    left: 0;
+    color: white;
+    background-color: rgb(48, 48, 48);
+}
+
+.right {
+    right: 0;
+    color: white;
+    background-color: rgb(56, 56, 65);
+}
+
+#user-left-elements {
+    position: absolute;
+    top: 10%;
+    left: 16%;
+}
+
+#user-right-elements {
+    position: absolute;
+    top: 10%;
+    left: 24%;
+}
+
+
+
+.Encryption-Title {
+    font-size: 36px;
+}
+
+.Key-Gen {
+    font-size: 36px;
+}
+
+label{
+    font-size: 16px;
+}
+
+input {
+    font-size: 1rem;
+    font-family: 'Raleway';
+    padding: 4px;
+    margin-top: 4%;
+    margin-bottom: 4%;
+    width: 240px;
+    text-decoration: none;
+    border: none;
+    background: none;
+    color: grey;
+    border-bottom: 1px solid grey;
+    outline: none;
+}
+
+input :active {
+    background: none;
+    outline: none;
+    border: none;
+}
+
+.Encrpytion, .Decryption {
+    font-size: 1.2rem;
+    color: rgb(48, 48, 48);
+    background-color: white;
+    border: 2px solid white;
+}
+
+
+#encrypt, #decrypt {
+    font-size: 1.2rem;
+    color: white;
+    border: 2px solid grey;
+}
+
+#keygen {
+    font-size: 1.2rem;
+    color: rgb(48, 48, 48);
+    background-color: white;
+    border: 2px solid white;
+}
+
+
+#logins {
+    font-size: 1.2rem;
+    color: white;
+    border: 2px solid grey;
+}
+
+
+@keyframes sub-title {
+    0% {
+        opacity: 0%;
+    }
+
+    75% {
+        opacity: 0%;
+    }
+
+    100% {
+        opacity: 100%;
+    }
+}
+
+.sub-title {
+    text-align: center;
+    padding-bottom: 48px;
+    font-size: 48px;
+    animation: sub-title 4s;
+}
+
+@keyframes title {
+    0% {
+        opacity: 0%;
+    }
+
+    100% {
+        opacity: 100%;
+    }
+}
+
+.title {
+    text-align: center;
+    animation: title 4s;
+}
+
+@keyframes image-anim {
+    0% {
+        opacity: 0%;
+    }
+
+    50% {
+        opacity: 0%;
+    }
+
+    75% {
+        opacity: 50%;
+    }
+
+    100% {
+        opacity: 100%;
+    }
+}
+
+.image {
+    animation: image-anim 4s;
+}
+

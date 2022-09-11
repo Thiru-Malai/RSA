@@ -1,0 +1,212 @@
+<html>
+
+<head>
+    <title>
+        RSA ALGORITHM
+    </title>
+    <link rel="stylesheet" href="./rsa.css">
+</head>
+
+<body>
+    <div>
+        <div class="user left">
+            <div id="user-left-elements">
+                <div class="key-gen" id="key-gen">
+                    <div class="Key-Gen">Key-Gen</div>
+                    <div class="form">
+                        <input type="text" name="p" placeholder="Enter p" id="p" required>
+                        <input type="text" name="q" placeholder="Enter q" id="q" required>
+                        <br>
+                        <label>N :</label>
+                        <label id="n" name="n"></label>
+                        <br>
+                        <label>PHI :</label>
+                        <label id="phi" name="phi" id="phi"></label>
+                        <br>
+                        <input type="text" name="e" placeholder="Enter e" id="e" required>
+                        <label name="gcd" id="gcd"></label>
+                        <br>
+                        <label>Value Of d is :</label>
+                        <label name="d" id="d"></label>
+                        <br>
+                        <input type="submit" name="keygen" name="keygen" value="Generate Key" id="keygen"
+                            onclick="generateKey('a')">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="user right">
+            <div id="user-right-elements">
+                <div class="enCryption-div" id="enCryption-div" style="display: block;">
+                    <div class="Encryption-Title">Encryption</div>
+                    <div class="form">
+                        <input type="text" name="message" placeholder="Enter Message" id="message" required>
+                        <br>
+                        <label>Encryption</label>
+                        <label name="encryptGCD" id="encrpytGCD"></label>
+                        <br>
+                        <br>
+                        <label>Encrypted Text</label>
+                        <label name="encryptedText" id="encryptedText"></label>
+                        <br>
+                        <input type="submit" name="EncrpytMessage" value="Encrypt" id="keygen"
+                            onclick="encryptMessage()">
+                        <br>
+                        <input type="button" name="deCrypt" name="deCrypt" value="Decrypt" id="DeCrypt"
+                            onclick="showDecrpytion()">
+                    </div>
+                </div>
+                <div class="DeCryption-div" id="DeCryption-div" style="display: none;">
+                    <div class="Encryption-Title">Decryption</div>
+                    <div class="form">
+                        <input type="text" name="message" placeholder="Enter EncryptedMessage" id="demessage" required>
+                        <br>
+                        <label>Decryption</label>
+                        <label name="decrypteGCD" id="decryptGCD"></label>
+                        <br>
+                        <br>
+                        <label>Decrypted Text</label>
+                        <label name="decryptedText" id="decryptedText"></label>
+                        <br>
+                        <input type="submit" name="DecrpytMessage" value="Decrypt" id="keygen"
+                            onclick="decryptMessage()">
+                        <br>
+                        <input type="button" name="Encrpyt" name="Encrpyt" value="Encrpyt" id="DeCrypt"
+                            onclick="showEncrpytion()">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    function showEncrpytion() {
+        document.getElementById('DeCryption-div').style.display = "none";
+        document.getElementById('enCryption-div').style.display = "block";
+
+    }
+
+
+    function showDecrpytion() {
+        document.getElementById('DeCryption-div').style.display = "block";
+        document.getElementById('enCryption-div').style.display = "none";
+
+    }
+
+    function gcd(e, phi) {
+        var r = 0;
+        e = parseInt(e);
+        while (true) {
+            r = phi % e;
+            if (r == 0) {
+                return e;
+            }
+            phi = e;
+            e = r;
+        }
+    }
+
+    function privateKey(x, y) {
+        var t1 = 0,
+            t2 = 1,
+            t = 0,
+            q;
+        var rem;
+        if (y > x) {
+            var temp = x;
+            x = y;
+            y = temp;
+        }
+        while (y != 0) {
+            rem = x % y;
+            q = parseInt(x / y);
+            t = t1 - (q * t2);
+            t1 = t2;
+            t2 = t;
+            x = y;
+            y = rem;
+        }
+        return t1;
+    }
+
+    function generateKey(m) {
+        var p = parseInt(document.getElementById("p").value);
+        var q = parseInt(document.getElementById("q").value);
+        var e = parseInt(document.getElementById('e').value);
+        var phi = (p - 1) * (q - 1); //PHI OR TOTILER'S FUNCTION
+        document.getElementById("n").innerText = (p * q);
+        document.getElementById('phi').innerText = (phi);
+        var dum = gcd(e, phi);
+        document.getElementById('gcd').innerText = "GCD  Is " + dum;
+        if (dum == 1) {
+            document.getElementById('keygen').disabled = false;
+            var d = privateKey(e, phi);
+            if (d < 0) {
+                d = d + phi;
+            }
+            document.getElementById('d').innerText = d;
+        } else {
+            window.alert("Re-Enter e To Find GCD");
+        }
+        if (m == 'e') {
+            return e;
+        } else if (m == 'd') {
+            return d;
+        } else {
+            return '0';
+        }
+    }
+
+
+    function calcPow(ascii, pow, n){
+        var num = 1;
+        for(let i = 0; i < pow; i++){
+            num = (ascii * num) % n;
+        }
+        return num;
+    }
+
+    function encryptMessage() {
+        var m = document.getElementById('message').value;
+        var n = parseInt(document.getElementById('n').textContent);
+        var phi = parseInt(document.getElementById('phi').textContent);
+        const letters = m.split("");
+        var e = generateKey('e');
+
+        const c = [];
+        const ascii = [];
+
+
+        for (let i = 0; i < letters.length; i++) {
+            ascii[i] = m.charCodeAt(i);
+            c[i] = calcPow(ascii[i], e, n);
+        }
+        document.getElementById('encrpytGCD').innerText = "GCD(" + e + " ," + phi + ")";
+        document.getElementById('encryptedText').innerText = c;
+    }
+
+    function decryptMessage(){
+        var m = document.getElementById('demessage').value;
+        var n = parseInt(document.getElementById('n').textContent);
+        var phi = parseInt(document.getElementById('phi').textContent);
+        var letters = m.split(',');
+        var d = generateKey('d');
+        console.log(letters);
+        const message = [];
+        const ascii = [];
+
+
+        for (let i = 0; i < letters.length; i++) {
+            ascii[i] = parseInt(letters[i]);
+            console.log(ascii[i]);      
+            message[i] = calcPow(ascii[i], d, n);
+        }
+        document.getElementById('decryptGCD').innerText = "GCD(" + d + " ," + phi + ")";
+        document.getElementById('decryptedText').innerText = message;
+    }
+
+
+</script>
+
+</html>
